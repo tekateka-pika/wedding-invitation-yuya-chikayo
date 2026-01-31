@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="robots" content="noindex,nofollow">
     <title>Wedding Invitation</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
     <style>
@@ -24,14 +23,35 @@
             perspective: 2000px;
         }
 
-        /* --- 1. 招待状：二つ折り --- */
+        /* --- 1. 封筒の「背中」 --- */
+        .env-back {
+            position: absolute; width: 340px; height: 240px;
+            background: var(--forest-green);
+            z-index: 1; /* 一番奥 */
+            top: 280px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeOut 0.8s forwards 7s;
+        }
+
+        /* --- 2. 封筒の「蓋」 --- */
+        .flap {
+            position: absolute; top: 280px; left: 0;
+            width: 0; height: 0;
+            border-left: 170px solid transparent; border-right: 170px solid transparent;
+            border-top: 130px solid var(--forest-green);
+            transform-origin: top;
+            z-index: 10; /* 最初はカードより前、開くと奥へ */
+            animation: openFlap 1s forwards 1s, fadeOut 0.8s forwards 7s;
+        }
+
+        /* --- 3. 招待状カード（サンドイッチの中身） --- */
         .card-container {
             position: absolute;
-            top: 250px; /* 封筒の中の初期位置 */
+            top: 290px; /* 封筒の中に隠れる位置 */
             width: 310px; height: 260px;
-            z-index: 5; /* 初期は封筒背面と前面の間 */
+            z-index: 5; /* 背中(1)より前、お腹(20)より後ろ */
             transform-style: preserve-3d;
-            /* 上昇、そして展開直前に最前面へ移動 */
+            /* 1:上昇、2:お腹より手前(z-index100)へ、3:展開 */
             animation: 
                 slideUp 2.2s forwards 2.5s, 
                 toFront 0.1s forwards 4.6s;
@@ -54,53 +74,30 @@
             border-top: 1px dashed rgba(45, 64, 46, 0.2);
             box-sizing: border-box; padding: 20px 15px;
             transform-origin: top;
-            transform: rotateX(179deg);
+            transform: rotateX(179deg); /* 背面に折りたたみ */
             backface-visibility: hidden;
             animation: unfold 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 4.8s;
         }
 
-        @keyframes slideUp { to { transform: translateY(-250px); } }
-        @keyframes toFront { to { z-index: 100; } } /* 封筒より絶対手前 */
-        @keyframes unfold { to { transform: rotateX(0deg); } }
-
-        /* --- 2. 封筒全体（最後にこれだけ消える） --- */
-        .envelope-wrapper {
-            position: absolute;
-            top: 250px;
-            width: 340px; height: 240px;
-            z-index: 10;
-            animation: fadeOutEnv 0.8s forwards 6.5s;
-        }
-
-        .env-back {
-            position: absolute; width: 100%; height: 100%;
-            background: var(--forest-green);
-            z-index: 1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .flap {
-            position: absolute; top: 0; left: 0;
-            width: 0; height: 0;
-            border-left: 170px solid transparent; border-right: 170px solid transparent;
-            border-top: 130px solid var(--forest-green);
-            transform-origin: top; z-index: 10;
-            animation: openFlap 1s forwards 1s;
-        }
-
+        /* --- 4. 封筒の「お腹（前面）」 --- */
         .env-front {
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 100%;
+            position: absolute; top: 280px; left: 0;
+            width: 340px; height: 240px;
             background: var(--forest-green);
-            /* 封筒の形を維持しつつ、底のはみ出しを物理的に隠す */
+            /* お腹の形（V字カット）を作り、かつ底からはみ出さないようにクリップ */
             clip-path: polygon(0 35%, 100% 35%, 100% 100%, 0 100%);
-            z-index: 8; 
+            z-index: 20; /* 上昇中のカードを隠す役目 */
+            animation: fadeOut 0.8s forwards 7s;
         }
 
+        /* --- アニメーション設定 --- */
         @keyframes openFlap { to { transform: rotateX(180deg); z-index: 1; } }
-        @keyframes fadeOutEnv { to { opacity: 0; visibility: hidden; } }
+        @keyframes slideUp { to { transform: translateY(-260px); } }
+        @keyframes toFront { to { z-index: 100; } } /* 封筒の「お腹」を追い越す */
+        @keyframes unfold { to { transform: rotateX(0deg); } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-        /* --- 3. コンテンツ装飾 --- */
+        /* 装飾 */
         .names { font-size: 1.6rem; margin: 15px 0; color: var(--forest-green); font-weight: 600; line-height: 1.2; }
         .rsvp-form { border-top: 1px solid var(--forest-green); margin-top: 10px; padding-top: 10px; text-align: left; }
         input, select { width: 100%; margin-bottom: 8px; padding: 8px; border: none; border-bottom: 1px solid var(--forest-green); background: transparent; font-family: inherit; font-size: 0.85rem; box-sizing: border-box; outline: none; }
@@ -110,11 +107,7 @@
 <body>
 
     <div class="stage">
-        <div class="envelope-wrapper">
-            <div class="flap"></div>
-            <div class="env-back"></div>
-            <div class="env-front"></div>
-        </div>
+        <div class="env-back"></div>
 
         <div class="card-container">
             <div class="card-top">
@@ -135,6 +128,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="env-front"></div>
+
+        <div class="flap"></div>
     </div>
 
 </body>
