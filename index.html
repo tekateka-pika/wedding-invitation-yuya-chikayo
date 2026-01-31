@@ -23,35 +23,39 @@
             perspective: 2000px;
         }
 
-        /* --- 1. 封筒の「背中」 --- */
-        .env-back {
-            position: absolute; width: 340px; height: 240px;
-            background: var(--forest-green);
-            z-index: 1; /* 一番奥 */
+        /* --- 封筒の土台（ここからはみ出させない） --- */
+        .envelope-box {
+            position: absolute;
             top: 280px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: fadeOut 0.8s forwards 7s;
+            width: 340px; height: 240px;
+            overflow: visible; /* 蓋が開くために必要 */
+            z-index: 10;
         }
 
-        /* --- 2. 封筒の「蓋」 --- */
-        .flap {
-            position: absolute; top: 280px; left: 0;
-            width: 0; height: 0;
-            border-left: 170px solid transparent; border-right: 170px solid transparent;
-            border-top: 130px solid var(--forest-green);
-            transform-origin: top;
-            z-index: 10; /* 最初はカードより前、開くと奥へ */
-            animation: openFlap 1s forwards 1s, fadeOut 0.8s forwards 7s;
+        /* 物理的な「底」と「お腹」を管理するマスク */
+        .env-body {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; /* これで底のはみ出しをカット */
+            z-index: 8;
         }
 
-        /* --- 3. 招待状カード（サンドイッチの中身） --- */
+        .env-back {
+            position: absolute; width: 100%; height: 100%;
+            background: var(--forest-green);
+            z-index: 1;
+        }
+
+        /* --- 招待状カード --- */
         .card-container {
             position: absolute;
-            top: 290px; /* 封筒の中に隠れる位置 */
+            top: 10px; /* 封筒の中 */
+            left: 15px;
             width: 310px; height: 260px;
-            z-index: 5; /* 背中(1)より前、お腹(20)より後ろ */
+            z-index: 5; /* 初期は中 */
             transform-style: preserve-3d;
-            /* 1:上昇、2:お腹より手前(z-index100)へ、3:展開 */
+            /* 1:上昇、2:手前へ(z-index100)、3:展開 */
             animation: 
                 slideUp 2.2s forwards 2.5s, 
                 toFront 0.1s forwards 4.6s;
@@ -74,26 +78,39 @@
             border-top: 1px dashed rgba(45, 64, 46, 0.2);
             box-sizing: border-box; padding: 20px 15px;
             transform-origin: top;
-            transform: rotateX(179deg); /* 背面に折りたたみ */
+            transform: rotateX(179deg);
             backface-visibility: hidden;
             animation: unfold 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 4.8s;
         }
 
-        /* --- 4. 封筒の「お腹（前面）」 --- */
+        /* 封筒の「前面」 */
         .env-front {
-            position: absolute; top: 280px; left: 0;
-            width: 340px; height: 240px;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--forest-green);
-            /* お腹の形（V字カット）を作り、かつ底からはみ出さないようにクリップ */
             clip-path: polygon(0 35%, 100% 35%, 100% 100%, 0 100%);
-            z-index: 20; /* 上昇中のカードを隠す役目 */
+            z-index: 10; /* カード(z-index:5)を隠す */
+        }
+
+        /* 封筒の「蓋」 */
+        .flap {
+            position: absolute; top: 280px; left: 0;
+            width: 0; height: 0;
+            border-left: 170px solid transparent; border-right: 170px solid transparent;
+            border-top: 130px solid var(--forest-green);
+            transform-origin: top;
+            z-index: 20;
+            animation: openFlap 1s forwards 1s;
+        }
+
+        /* アニメーション全体消去 */
+        .fade-out-group {
             animation: fadeOut 0.8s forwards 7s;
         }
 
-        /* --- アニメーション設定 --- */
         @keyframes openFlap { to { transform: rotateX(180deg); z-index: 1; } }
         @keyframes slideUp { to { transform: translateY(-260px); } }
-        @keyframes toFront { to { z-index: 100; } } /* 封筒の「お腹」を追い越す */
+        @keyframes toFront { to { z-index: 100; } } /* 封筒の全てより前に */
         @keyframes unfold { to { transform: rotateX(0deg); } }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
@@ -107,8 +124,6 @@
 <body>
 
     <div class="stage">
-        <div class="env-back"></div>
-
         <div class="card-container">
             <div class="card-top">
                 <p style="font-size: 0.6rem; letter-spacing: 3px; margin:0;">INVITATION</p>
@@ -129,9 +144,15 @@
             </div>
         </div>
 
-        <div class="env-front"></div>
-
-        <div class="flap"></div>
+        <div class="fade-out-group">
+            <div class="envelope-box">
+                <div class="env-body">
+                    <div class="env-back"></div>
+                    <div class="env-front"></div>
+                </div>
+            </div>
+            <div class="flap"></div>
+        </div>
     </div>
 
 </body>
