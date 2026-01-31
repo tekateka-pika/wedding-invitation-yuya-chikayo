@@ -50,7 +50,7 @@
             z-index: 10;
         }
 
-        /* 扇子コンテナ：サイズを拡大 (280px -> 340px) */
+        /* 扇子コンテナ */
         .fan-box {
             position: relative;
             width: 340px; 
@@ -67,19 +67,18 @@
             background-position: center;
         }
 
-        /* 文字位置の微調整：扇子の紙部分（上半分）にフィットさせる */
+        /* 【重要】文字位置とサイズの修正 */
         .yc-name {
             position: absolute;
-            top: 30%; /* 少し上に持ち上げて紙の部分へ移動 */
+            top: 22%; /* さらに上に上げて白い部分のど真ん中に配置 */
             left: 50%;
-            transform: translateX(-50%) rotate(-1deg);
+            transform: translateX(-50%);
             font-family: 'Water Brush', cursive;
-            font-size: 3.2rem; /* 扇子に合わせて少し大きく */
+            font-size: 2.2rem; /* サイズを小さくして、はみ出さないように修正 */
             color: var(--black);
             white-space: nowrap;
             pointer-events: none;
-            /* 読みやすくするための微かな光彩 */
-            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+            text-shadow: 0 0 3px rgba(255,255,255,0.5); /* 視認性を確保 */
         }
 
         .welcome-text { 
