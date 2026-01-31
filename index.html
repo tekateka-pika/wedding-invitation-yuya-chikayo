@@ -13,7 +13,9 @@
             background: var(--white); 
             font-family: 'Cormorant Garamond', serif; 
             display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; 
+            overflow: hidden;
+            /* タップ時の青い枠を消す */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .outer-frame {
@@ -25,126 +27,92 @@
             border: 1px solid var(--black);
             background: var(--white); 
             overflow: hidden; 
-            display: flex; 
-            flex-direction: column;
         }
 
         .invitation-container { 
-            flex: 1; 
+            width: 100%;
+            height: 100%;
             position: relative; 
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
         }
 
-        /* --- Welcome画面 --- */
-        .welcome-screen {
+        /* --- Welcome画面 (最前面) --- */
+        #welcomeScreen {
             position: absolute; 
-            inset: 0; 
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             display: flex; 
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
             background: var(--white);
-            z-index: 100;
+            z-index: 9999; /* 確実に一番上に配置 */
             cursor: pointer;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease;
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .fan-box {
             position: relative;
-            width: 340px; 
-            height: 220px;
+            width: 340px; height: 220px;
             margin-bottom: 10px;
+            pointer-events: none; /* 下の画面へのタップを邪魔しない */
         }
 
         .fan-img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background-image: url('fan.jfif'); 
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
         }
 
-        /* 文字位置を「白い部分」の低い位置（31%）に固定 */
         .yc-name {
             position: absolute;
-            top: 31%; 
-            left: 50%;
+            top: 31%; left: 50%;
             transform: translateX(-50%);
             font-family: 'Water Brush', cursive;
             font-size: 2.1rem; 
             color: var(--black);
             white-space: nowrap;
-            pointer-events: none;
-            letter-spacing: 1px;
         }
 
         .welcome-text { 
-            font-size: 1.6rem; 
-            color: var(--black); 
-            letter-spacing: 5px; 
-            text-align: center;
-            margin-top: 15px;
-            line-height: 1.4;
+            font-size: 1.6rem; color: var(--black); letter-spacing: 5px; 
+            text-align: center; margin-top: 15px; pointer-events: none;
         }
 
         .tap-hint { 
-            margin-top: 30px; 
-            font-size: 0.7rem; 
-            letter-spacing: 2px; 
-            opacity: 0.5; 
-            animation: blink 2s infinite; 
+            margin-top: 30px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.5; 
+            animation: blink 2s infinite; pointer-events: none;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.1; } }
 
-        /* --- Detail画面 --- */
-        .detail-screen { 
-            visibility: hidden;
-            opacity: 0; 
-            transition: opacity 0.8s ease;
-            min-height: 100%;
+        /* --- Detail画面 (背面) --- */
+        #detailScreen { 
+            display: none; /* 最初は存在させない */
             width: 100%;
+            min-height: 100%;
         }
         
-        /* 詳細画面の画像を新ファイル名「wdpic.jpeg」に変更 */
         .detail-hero-img {
-            width: 100%; 
-            height: 240px;
+            width: 100%; height: 240px;
             background-image: url('wdpic.jpeg'); 
-            background-size: cover; 
-            background-position: center;
+            background-size: cover; background-position: center;
             background-color: #f0f0f0;
         }
 
         .content-body { padding: 40px 25px; text-align: center; }
         .section-title { font-size: 1.6rem; border-bottom: 1px solid var(--black); padding-bottom: 10px; margin-bottom: 35px; }
-
         .info-block { margin-bottom: 30px; }
         .info-block h3 { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.7; }
         .info-block p { font-size: 1.1rem; line-height: 1.6; margin: 0; }
 
         .rsvp-form { margin-top: 50px; border-top: 1px solid var(--black); padding-top: 40px; }
-        input, select { 
-            width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid var(--black); 
-            background: transparent; font-family: inherit; box-sizing: border-box; 
-        }
-        .btn { 
-            background: var(--black); color: var(--white); border: none; padding: 18px; 
-            width: 100%; font-weight: bold; cursor: pointer; letter-spacing: 2px;
-        }
+        input, select { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid var(--black); background: transparent; box-sizing: border-box; }
+        .btn { background: var(--black); color: var(--white); border: none; padding: 18px; width: 100%; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
 
-        /* アニメーション用クラス */
-        .welcome-screen.hide { 
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
-        .detail-screen.show { 
-            visibility: visible;
-            opacity: 1; 
-        }
     </style>
 </head>
 <body>
@@ -152,7 +120,7 @@
     <div class="outer-frame">
         <div class="invitation-container" id="scrollContainer">
             
-            <div class="welcome-screen" id="welcomeScreen">
+            <div id="welcomeScreen" onclick="openInvitation()">
                 <div class="fan-box">
                     <div class="fan-img"></div>
                     <div class="yc-name">Y & C</div>
@@ -161,7 +129,7 @@
                 <div class="tap-hint">TAP TO OPEN</div>
             </div>
 
-            <div class="detail-screen" id="detailScreen">
+            <div id="detailScreen">
                 <div class="detail-hero-img"></div>
                 <div class="content-body">
                     <h2 class="section-title">Invitation</h2>
@@ -173,4 +141,38 @@
                         <h3>Venue</h3>
                         <p>The Grand Heritage<br>Aoyama, Tokyo</p>
                     </div>
-                    <div class
+                    <div class="rsvp-form">
+                        <input type="text" placeholder="Your Name">
+                        <select>
+                            <option value="" disabled selected>Attendance</option>
+                            <option value="yes">Joyfully Accepts</option>
+                            <option value="no">Regretfully Declines</option>
+                        </select>
+                        <button class="btn">SEND RESPONSE</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 最もシンプルで確実な切り替え関数
+        function openInvitation() {
+            const welcome = document.getElementById('welcomeScreen');
+            const detail = document.getElementById('detailScreen');
+            
+            // Welcome画面を上にスライドさせて消す
+            welcome.style.transform = 'translateY(-100%)';
+            welcome.style.opacity = '0';
+            
+            // 0.5秒後に完全に非表示にし、詳細画面を表示する
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                detail.style.display = 'block';
+                document.getElementById('scrollContainer').scrollTop = 0;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
