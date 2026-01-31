@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wedding Invitation (Fan Theme)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary-black: #000000; 
+            --pure-white: #FFFFFF; 
+        }
+        
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: var(--pure-white); 
+            font-family: 'Cormorant Garamond', serif;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
+        }
+
+        /* 外枠の設定 */
+        .outer-frame {
+            position: relative;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            max-width: 400px;
+            max-height: 700px;
+            border: 2px solid var(--primary-black); /* 黒い外枠 */
+            background-color: var(--pure-white);
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 内部コンテナ（スクロール用） */
+        .invitation-container {
+            flex: 1;
+            position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* --- Welcome画面 --- */
+        .welcome-screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--pure-white);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .fan-illustration {
+            width: 80%; /* 扇子の幅 */
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        .fan-illustration svg {
+            width: 100%;
+            height: auto;
+        }
+        .fan-illustration text {
+            font-family: 'Dancing Script', cursive; /* 筆記体フォント */
+            font-size: 50px; /* 文字のサイズ */
+            fill: var(--pure-white); /* 扇子の色に合わせて白 */
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .welcome-text {
+            font-size: 1.8rem;
+            color: var(--primary-black);
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .tap-hint {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: var(--primary-black);
+            letter-spacing: 1px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* --- Detail画面 --- */
+        .detail-screen {
+            padding: 60px 30px;
+            background-color: var(--pure-white);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .detail-title {
+            font-size: 1.8rem;
+            color: var(--primary-black);
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--primary-black);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .detail-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .detail-section h3 {
+            font-size: 1.1rem;
+            color: var(--primary-black);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .detail-section p {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* RSVPフォーム */
+        .rsvp-form {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid var(--primary-black);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--primary-black);
+            background-color: var(--pure-white);
+            font-family: inherit;
+            box-sizing: border-box;
+            color: var(--primary-black);
+        }
+
+        .btn {
+            background-color: var(--primary-black);
+            color: var(--pure-white);
+            padding: 18px;
+            border: none;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* アニメーション用クラス */
+        .welcome-screen.hidden {
+            transform: translateY(-100%);
+        }
+        .detail-screen.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outer-frame">
+        <div class="invitation-container" id="invitationContainer">
+            
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="fan-illustration">
+                    <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M150 15 C 250 10, 290 80, 290 150 L 10 150 C 10 80, 50 10, 150 15 Z" fill="var(--primary-black)" />
+                        
+                        <line x1="150" y1="15" x2="150" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="200" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="100" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="230" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="70" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="260" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="40" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="280" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        <line x1="150" y1="15" x2="20" y2="150" stroke="var(--pure-white)" stroke-width="1"/>
+                        
+                        <circle cx="150" cy="150" r="10" fill="var(--primary-black)" stroke="var(--pure-white)" stroke-width="1"/>
+
+                        <text x="150" y="75" font-size="50px" font-family="'Dancing Script', cursive" fill="var(--pure-white)">Y & C</text>
+                    </svg>
+                </div>
+
+                <div class="welcome-text">
+                    WELCOME TO<br>OUR WEDDING
+                </div>
+                <div class="tap-hint">Tap to Open</div>
+            </div>
+
+            <div class="detail-screen" id="detailScreen">
+                <h2 class="detail-title">Invitation Details</h2>
+
+                <div class="detail-section">
+                    <h3>Date & Time</h3>
+                    <p>Saturday, June 14, 2026<br>Ceremony: 3:00 PM</p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Venue</h3>
+                    <p>The Grand Ballroom<br>123 Main Street, Cityville</p>
+                </div>
+
+                <div class="rsvp-form">
+                    <h3 style="text-align: center; letter-spacing: 3px;">RSVP</h3>
+                    <p style="text-align: center; font-size: 0.8rem; margin-bottom: 20px;">Please respond by May 1st</p>
+                    <input type="text" placeholder="Full Name">
+                    <select>
+                        <option value="" disabled selected>Will you join us?</option>
+                        <option value="yes">Joyfully Accepts</option>
+                        <option value="no">Regretfully Declines</option>
+                    </select>
+                    <textarea placeholder="Message to the Couple" rows="3"></textarea>
+                    <button class="btn">SEND RESPONSE</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('welcomeScreen').addEventListener('click', function() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('detailScreen').classList.add('visible');
+            document.getElementById('invitationContainer').scrollTop = 0;
+        });
+    </script>
+
+</body>
+</html>
