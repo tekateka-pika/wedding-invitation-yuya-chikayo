@@ -10,7 +10,6 @@
             --black: #1a1a1a; 
             --white: #ffffff; 
             --gold: #c5a059;
-            /* Didotを最優先に指定 */
             --didot: "Didot", "Bodoni MT", "Cormorant Garamond", serif;
         }
         
@@ -70,7 +69,6 @@
             font-size: 2.1rem; color: var(--black); white-space: nowrap;
         }
 
-        /* TOP文字を太字に */
         .welcome-text { 
             font-size: 1.3rem; color: var(--black); letter-spacing: 3px; 
             text-align: center; margin-top: 15px; pointer-events: none;
@@ -103,7 +101,6 @@
         .detail-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
         .detail-value { font-size: 1.3rem; line-height: 1.5; color: var(--black); margin: 0; }
         
-        /* 住所の日本語表記スタイル */
         .jp-address { 
             font-size: 0.9rem; 
             font-family: "Hiragino Mincho ProN", "MS Mincho", serif; 
@@ -120,9 +117,9 @@
             overflow: hidden; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .map-container iframe { width: 100% !important; height: 100% !important; border: 0; }
+        /* 地図を100%表示に固定 */
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
 
-        /* RSVPフォーム */
         .rsvp-form { margin-top: 50px; border-top: 1px solid var(--black); padding-top: 50px; text-align: left; }
         .rsvp-deadline { text-align: center; font-size: 0.9rem; color: var(--black); margin-bottom: 40px; line-height: 1.6; font-family: "Hiragino Mincho ProN", serif; }
         
@@ -176,7 +173,7 @@
                             <p class="detail-value">ZENBO SEINEI</p>
                             <p class="jp-address">禅坊 靖寧<br>〒656-2301 兵庫県淡路市楠本 字場中2594-5</p>
                             <div class="map-container">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.0065306917646!2d134.9803403764516!3d34.57864007296279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOmBiei9rw!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.068361778906!2d134.98290267670734!3d34.57715877296317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOWunuevow!5e0!3m2!1sja!2sjp!4v1709424000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
