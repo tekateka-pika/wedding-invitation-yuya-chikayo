@@ -65,8 +65,9 @@
         }
 
         .welcome-text { 
-            font-size: 1.6rem; color: var(--black); letter-spacing: 5px; 
+            font-size: 1.3rem; color: var(--black); letter-spacing: 3px; 
             text-align: center; margin-top: 15px; pointer-events: none;
+            line-height: 1.6;
         }
 
         .tap-hint { 
@@ -94,12 +95,11 @@
         .detail-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
         .detail-value { font-size: 1.3rem; line-height: 1.5; color: var(--black); margin: 0; }
         
-        /* マップ調整：高さをさらに安定させ、ズレを防ぐ */
         .map-container { 
             margin: 25px auto 0; 
             width: 100%; 
             border: 1px solid #eee; 
-            height: 350px; 
+            height: 380px; 
             overflow: hidden; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
@@ -107,7 +107,9 @@
 
         /* RSVPフォーム */
         .rsvp-form { margin-top: 80px; border-top: 1px solid var(--black); padding-top: 50px; text-align: left; }
-        .rsvp-section-title { text-align: center; font-size: 1.6rem; margin-bottom: 40px; letter-spacing: 4px; }
+        .rsvp-section-title { text-align: center; font-size: 1.6rem; margin-bottom: 10px; letter-spacing: 4px; }
+        .rsvp-deadline { text-align: center; font-size: 0.85rem; color: var(--black); margin-bottom: 40px; line-height: 1.6; }
+        
         .rsvp-form label { display: block; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600; }
         
         .name-row { display: flex; gap: 10px; width: 100%; margin-bottom: 25px; }
@@ -136,7 +138,7 @@
                     <div class="fan-img"></div>
                     <div class="yc-name">Y & C</div>
                 </div>
-                <div class="welcome-text">WELCOME TO<br>OUR WEB INVITATION</div>
+                <div class="welcome-text">Yuya & Chikayo<br>Wedding Invitation</div>
                 <div class="tap-hint">TAP TO OPEN</div>
             </div>
 
@@ -156,13 +158,14 @@
                             <span class="detail-label">Venue</span>
                             <p class="detail-value">ZENBO SEINEI</p>
                             <div class="map-container">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.0340798363765!2d134.98034157640324!3d34.57805179041245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOWluuWvpQ!5e0!3m2!1sja!2sjp!4v1706798836544!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.039016390159!2d134.98132937667923!3d34.57788437296336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOW6lumBng!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
 
                     <div class="rsvp-form">
                         <h2 class="rsvp-section-title">RSVP</h2>
+                        <p class="rsvp-deadline">大変お手数ですが、<br>3月1日(日)までにご回答をお願いします</p>
                         
                         <label>Name (Latin)</label>
                         <div class="name-row">
