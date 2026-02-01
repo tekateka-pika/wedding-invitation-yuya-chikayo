@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wedding Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Water+Brush&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Water+Brush&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --black: #1a1a1a; --white: #ffffff; --gold: #c5a059; }
+        :root { 
+            --black: #1a1a1a; 
+            --white: #ffffff; 
+            --gold: #c5a059;
+            /* Didotを最優先に指定 */
+            --didot: "Didot", "Bodoni MT", "Cormorant Garamond", serif;
+        }
         
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             background: var(--white); 
-            font-family: 'Cormorant Garamond', serif; 
+            font-family: var(--didot); 
             display: flex; justify-content: center; align-items: center; 
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
@@ -64,10 +70,12 @@
             font-size: 2.1rem; color: var(--black); white-space: nowrap;
         }
 
+        /* TOP文字を太字に */
         .welcome-text { 
             font-size: 1.3rem; color: var(--black); letter-spacing: 3px; 
             text-align: center; margin-top: 15px; pointer-events: none;
             line-height: 1.6;
+            font-weight: 700; 
         }
 
         .tap-hint { 
@@ -95,6 +103,15 @@
         .detail-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
         .detail-value { font-size: 1.3rem; line-height: 1.5; color: var(--black); margin: 0; }
         
+        /* 住所の日本語表記スタイル */
+        .jp-address { 
+            font-size: 0.9rem; 
+            font-family: "Hiragino Mincho ProN", "MS Mincho", serif; 
+            margin-top: 10px; 
+            line-height: 1.8;
+            color: #333;
+        }
+
         .map-container { 
             margin: 25px auto 0; 
             width: 100%; 
@@ -106,9 +123,8 @@
         .map-container iframe { width: 100% !important; height: 100% !important; border: 0; }
 
         /* RSVPフォーム */
-        .rsvp-form { margin-top: 80px; border-top: 1px solid var(--black); padding-top: 50px; text-align: left; }
-        .rsvp-section-title { text-align: center; font-size: 1.6rem; margin-bottom: 10px; letter-spacing: 4px; }
-        .rsvp-deadline { text-align: center; font-size: 0.85rem; color: var(--black); margin-bottom: 40px; line-height: 1.6; }
+        .rsvp-form { margin-top: 50px; border-top: 1px solid var(--black); padding-top: 50px; text-align: left; }
+        .rsvp-deadline { text-align: center; font-size: 0.9rem; color: var(--black); margin-bottom: 40px; line-height: 1.6; font-family: "Hiragino Mincho ProN", serif; }
         
         .rsvp-form label { display: block; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600; }
         
@@ -117,13 +133,14 @@
 
         input, select, textarea { 
             width: 100%; padding: 12px; margin-bottom: 25px; border: 1px solid var(--black); 
-            background: transparent; font-family: inherit; box-sizing: border-box; font-size: 1rem; border-radius: 0;
+            background: transparent; font-family: var(--didot); box-sizing: border-box; font-size: 1rem; border-radius: 0;
         }
         .name-row input { margin-bottom: 0; }
         textarea { height: 80px; resize: none; }
         .btn { 
             background: var(--black); color: var(--white); border: none; padding: 18px; 
             width: 100%; font-weight: bold; cursor: pointer; letter-spacing: 2px; margin-top: 10px;
+            font-family: var(--didot);
         }
 
     </style>
@@ -157,14 +174,14 @@
                         <div class="detail-item">
                             <span class="detail-label">Venue</span>
                             <p class="detail-value">ZENBO SEINEI</p>
+                            <p class="jp-address">禅坊 靖寧<br>〒656-2301 兵庫県淡路市楠本 字場中2594-5</p>
                             <div class="map-container">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.039016390159!2d134.98132937667923!3d34.57788437296336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOW6lumBng!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.0065306917646!2d134.9803403764516!3d34.57864007296279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355359a35623089d%3A0x2863071350a4023c!2z56aF5Z2KIOmBiei9rw!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
 
                     <div class="rsvp-form">
-                        <h2 class="rsvp-section-title">RSVP</h2>
                         <p class="rsvp-deadline">大変お手数ですが、<br>3月1日(日)までにご回答をお願いします</p>
                         
                         <label>Name (Latin)</label>
