@@ -100,7 +100,7 @@
         .detail-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
         .detail-value { font-size: 1.3rem; line-height: 1.5; color: var(--black); margin: 0; font-weight: 400; }
         
-        .jp-address { 
+        .jp-address, .venue-name { 
             font-size: 0.95rem; 
             font-family: "Hiragino Mincho ProN", "MS Mincho", serif; 
             margin-top: 8px; 
@@ -154,7 +154,6 @@
             font-family: var(--didot);
         }
 
-        /* --- 送信後のメッセージ表示用 --- */
         #thankYouMessage { display: none; padding: 60px 0; text-align: center; }
 
     </style>
@@ -187,8 +186,8 @@
 
                         <div class="detail-item">
                             <span class="detail-label">VENUE</span>
-                            <p class="detail-value">ZENBO SEINEI</p>
-                            <p class="jp-address">禅坊 靖寧<br>〒656-2301 兵庫県淡路市楠本 字場中2594-5</p>
+                            <p class="detail-value" style="font-family: 'Hiragino Mincho ProN', serif;">禅坊 清寧 -ZENBO SEINEI-</p>
+                            <p class="jp-address">〒656-2301 兵庫県淡路市楠本 字場中2594-5</p>
                         </div>
 
                         <div class="detail-item">
@@ -265,7 +264,6 @@
             }, 600);
         }
 
-        // --- Googleスプレッドシート(GAS)連携スクリプト ---
         document.getElementById('weddingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -274,7 +272,7 @@
             submitBtn.innerText = "SENDING...";
             submitBtn.disabled = true;
 
-            // ★ここにGASで発行したウェブアプリのURLを貼り付けてください
+            // GASのURLをセット済みです
             var GAS_URL = "https://script.google.com/macros/s/AKfycbxMvRAyWQHWtjc8p8TLFb46KDIVY9orD9TnhST4r545Os9xxxmV4-Un4eYWNKG0EIri/exec";
 
             var formData = {
@@ -290,18 +288,15 @@
                 mode: "no-cors",
                 body: JSON.stringify(formData)
             }).then(function() {
-                // 送信成功時
                 document.getElementById('rsvpSection').style.display = 'none';
                 document.getElementById('thankYouMessage').style.display = 'block';
-                // メッセージまでスクロール
                 document.getElementById('scrollContainer').scrollTo({
                     top: document.getElementById('thankYouMessage').offsetTop,
                     behavior: 'smooth'
                 });
             }).catch(function(error) {
-                // エラー時
                 console.error("Error!", error);
-                alert("送信中にエラーが発生しました。インターネット接続を確認し、もう一度お試しください。");
+                alert("送信中にエラーが発生しました。");
                 submitBtn.innerText = originalBtnText;
                 submitBtn.disabled = false;
             });
